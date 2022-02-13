@@ -1,1 +1,1 @@
-A*
+<bold>A*</bold>
