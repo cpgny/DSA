@@ -63,7 +63,7 @@ int64_t lcm(int64_t a,int64_t b) {
     return a / gcd(a, b) * b;
 }
 
-//O(N^2)
+//O(N*K)
 vector<int> perm(vector<int> items, int k) {
     vector<int> rest;
     int rem = 0;
