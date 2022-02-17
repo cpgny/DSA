@@ -37,6 +37,7 @@ template <typename T>
 void print(T x, char t) {
     print(x); putchar(t);
 }
+
 template<class T> bool cmin(T &a, const T &b) {
     if(b < a) {
        a = b;
@@ -44,9 +45,11 @@ template<class T> bool cmin(T &a, const T &b) {
     }
     return 0;
 }
+
 void mxc(intmax_t &a, intmax_t b) {
     a = min(a, b);
 }
+
 void mxh(intmax_t &a, intmax_t b) {
     a = max(a, b);        
 }
