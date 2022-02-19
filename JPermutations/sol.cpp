@@ -13,7 +13,7 @@
 using namespace std;
 #define pb push_back
 #define mp make_pair
-#define rng ios::sync_with_stdio(false); cin.tie(nullptr);
+#define gcc ios::sync_with_stdio(false); cin.tie(nullptr);
 typedef pair<int64_t, int64_t> PLL;
 typedef pair<int, int> PII;
 typedef pair<double, double> PDD;
@@ -102,7 +102,7 @@ vector<int> perm(vector<int> items, int k) {
 }
 
 void sol(vector<int> items, int k) {
-    rng
+    gcc
     vector<int> permut = perm(items, k); 
     for(const auto &c : permut)
        cout << c <<'\n';
@@ -138,7 +138,7 @@ void update(int p, int v) {
 }
 
 void sol(int n, int k) {
-    rng
+    gcc
     init(n);
     for(int remain = n, pos = 0; remain > 0; --remain) {
        pos += remain + k;
