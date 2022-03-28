@@ -1,92 +1,21 @@
-template <int M>
-struct Modint {
-  public:
-    static constexpr int mod() { return M; }
+template<int MOD>
+struct ModInt {
+  unsigned x;
+  ModInt() : x(0) { }
+  ModInt(signed sig) : x(sig) {  }
+  ModInt(signed long long sig) : x(sig%MOD) { }
+  int get() const { return (int)x; }
+  ModInt pow(long long p) { ModInt res = 1, a = *this; while (p) { if (p & 1) res *= a; a *= a; p >>= 1; } return res; }
  
-    Modint() : _v(0) {}
+  ModInt &operator+=(ModInt that) { if ((x += that.x) >= MOD) x -= MOD; return *this; }
+  ModInt &operator-=(ModInt that) { if ((x += MOD - that.x) >= MOD) x -= MOD; return *this; }
+  ModInt &operator*=(ModInt that) { x = (unsigned long long)x * that.x % MOD; return *this; }
+  ModInt &operator/=(ModInt that) { return (*this) *= that.pow(MOD - 2); }
  
-    template <class T>
-    Modint(T v) {
-        long long x = (long long)(v % (long long)(Umod()));
-        if (x < 0) x += Umod();
-        _v = (unsigned int)(x);
-    }
- 
-    Modint(bool v) { _v = ((unsigned int)(v) % Umod()); }
- 
-    unsigned int val() const { return _v; }
- 
-    Modint& operator++() {
-        _v++;
-        if (_v == Umod()) _v = 0;
-        return *this;
-    }
-    Modint& operator--() {
-        if (_v == 0) _v = Umod();
-        _v--;
-        return *this;
-    }
-    Modint operator++(int) {
-        Modint result = *this;
-        ++*this;
-        return result;
-    }
-    Modint operator--(int) {
-        Modint result = *this;
-        --*this;
-        return result;
-    }
- 
-    Modint& operator+=(const Modint& rhs) {
-        _v += rhs._v;
-        if (_v >= Umod()) _v -= Umod();
-        return *this;
-    }
-    Modint& operator-=(const Modint& rhs) {
-        _v -= rhs._v;
-        if (_v >= Umod()) _v += Umod();
-        return *this;
-    }
-    Modint& operator*=(const Modint& rhs) {
-        unsigned long long z = _v;
-        z *= rhs._v;
-        _v = (unsigned int)(z % Umod());
-        return *this;
-    }
-    Modint& operator/=(const Modint& rhs) { return *this = *this * rhs.inv(); }
- 
-    Modint operator+() const { return *this; }
-    Modint operator-() const { return Modint() - *this; }
- 
-    Modint pow(long long n) const {
-        assert(0 <= n);
-        Modint x = *this, r = 1;
-        while (n) {
-            if (n & 1) r *= x;
-            x *= x;
-            n >>= 1;
-        }
-        return r;
-    }
-    Modint inv() const {
-        assert(_v);
-        return pow(Umod() - 2);
-    }
- 
-    friend Modint operator+(const Modint& lhs, const Modint& rhs) { return Modint(lhs) += rhs; }
-    friend Modint operator-(const Modint& lhs, const Modint& rhs) { return Modint(lhs) -= rhs; }
-    friend Modint operator*(const Modint& lhs, const Modint& rhs) { return Modint(lhs) *= rhs; }
-    friend Modint operator/(const Modint& lhs, const Modint& rhs) { return Modint(lhs) /= rhs; }
-    friend bool operator==(const Modint& lhs, const Modint& rhs) { return lhs._v == rhs._v; }
-    friend bool operator!=(const Modint& lhs, const Modint& rhs) { return lhs._v != rhs._v; }
-    friend bool operator<(const Modint& lhs, const Modint& rhs) { return lhs._v < rhs._v; }
-    friend bool operator>(const Modint& lhs, const Modint& rhs) { return lhs._v > rhs._v; }
-    friend bool operator<=(const Modint& lhs, const Modint& rhs) { return lhs._v <= rhs._v; }
-    friend bool operator>=(const Modint& lhs, const Modint& rhs) { return lhs._v >= rhs._v; }
-    friend string to_string(const Modint& rhs) { return to_string(rhs.val()); }
-    friend std::ostream& operator<<(std::ostream& os, const Modint& a) { os << to_string(a); return os; }
-    
-  private:
-    unsigned int _v;
-    static constexpr unsigned int Umod() { return M; }
+  ModInt operator+(ModInt that) const { return ModInt(*this) += that; }
+  ModInt operator-(ModInt that) const { return ModInt(*this) -= that; }
+  ModInt operator*(ModInt that) const { return ModInt(*this) *= that; }
+  ModInt operator/(ModInt that) const { return ModInt(*this) /= that; }
+  bool operator<(ModInt that) const { return x < that.x; }
+  friend ostream& operator<<(ostream &os, ModInt a) { os << a.x; return os; }
 };
