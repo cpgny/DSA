@@ -76,9 +76,6 @@ void sol() {
            }
        }
    }
-   for(const auto &c : preprocess) {
-       cout << "iteration: " << c <<'\n';
-   }
    for(const auto &c : dx) {
       jx += c;
    }
